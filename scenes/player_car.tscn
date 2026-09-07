@@ -1,0 +1,103 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/player_car.gd" id="1_car"]
+[ext_resource type="Material" path="res://materials/car_body.tres" id="2_body"]
+[ext_resource type="Material" path="res://materials/car_cabin.tres" id="3_cabin"]
+[ext_resource type="Material" path="res://materials/car_plastic.tres" id="4_plastic"]
+[ext_resource type="Material" path="res://materials/car_wheel.tres" id="5_wheel"]
+[ext_resource type="Material" path="res://materials/car_light.tres" id="6_light"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_body"]
+size = Vector3(1.7, 0.72, 3.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(1.7, 0.42, 3.15)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nose"]
+size = Vector3(1.55, 0.22, 0.7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cabin"]
+size = Vector3(1.42, 0.38, 1.35)
+
+[sub_resource type="BoxMesh" id="BoxMesh_spoiler"]
+size = Vector3(1.75, 0.08, 0.28)
+
+[sub_resource type="BoxMesh" id="BoxMesh_light"]
+size = Vector3(0.28, 0.1, 0.08)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wheel"]
+top_radius = 0.32
+bottom_radius = 0.32
+height = 0.26
+
+[node name="PlayerCar" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_car")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36, 0)
+shape = SubResource("BoxShape3D_body")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="Body" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48, 0.05)
+mesh = SubResource("BoxMesh_body")
+surface_material_override/0 = ExtResource("2_body")
+
+[node name="Nose" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, -1.62)
+mesh = SubResource("BoxMesh_nose")
+surface_material_override/0 = ExtResource("2_body")
+
+[node name="Cabin" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84, 0.28)
+mesh = SubResource("BoxMesh_cabin")
+surface_material_override/0 = ExtResource("3_cabin")
+
+[node name="Spoiler" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.78, 1.52)
+mesh = SubResource("BoxMesh_spoiler")
+surface_material_override/0 = ExtResource("4_plastic")
+
+[node name="HeadlightL" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.52, 0.4, -1.96)
+mesh = SubResource("BoxMesh_light")
+surface_material_override/0 = ExtResource("6_light")
+
+[node name="HeadlightR" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.52, 0.4, -1.96)
+mesh = SubResource("BoxMesh_light")
+surface_material_override/0 = ExtResource("6_light")
+
+[node name="WheelFL" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78, 0.32, -1.15)
+
+[node name="Mesh" type="MeshInstance3D" parent="Visuals/WheelFL"]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = ExtResource("5_wheel")
+
+[node name="WheelFR" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.78, 0.32, -1.15)
+
+[node name="Mesh" type="MeshInstance3D" parent="Visuals/WheelFR"]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = ExtResource("5_wheel")
+
+[node name="WheelRL" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78, 0.32, 1.2)
+
+[node name="Mesh" type="MeshInstance3D" parent="Visuals/WheelRL"]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = ExtResource("5_wheel")
+
+[node name="WheelRR" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.78, 0.32, 1.2)
+
+[node name="Mesh" type="MeshInstance3D" parent="Visuals/WheelRR"]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = ExtResource("5_wheel")
