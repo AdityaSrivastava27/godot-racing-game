@@ -17,6 +17,7 @@ extends CharacterBody3D
 var controls_enabled: bool = false
 var signed_speed: float = 0.0
 var _wheel_spin: float = 0.0
+var _hit_lock: float = 0.0
 
 @onready var _visuals: Node3D = $Visuals
 @onready var _wheel_fl: Node3D = $Visuals/WheelFL
@@ -38,6 +39,10 @@ func _physics_process(delta: float) -> void:
 	var axes := Vector2.ZERO
 	if controls_enabled:
 		axes = _get_drive_axes()
+
+	if _hit_lock > 0.0:
+		_hit_lock = maxf(_hit_lock - delta, 0.0)
+		axes *= 0.12
 
 	_apply_speed(axes.y, delta)
 	_apply_steering(axes.x, delta)
@@ -118,3 +123,22 @@ func _update_visuals(steer: float, throttle: float, delta: float) -> void:
 	_wheel_fr.rotation = Vector3(_wheel_spin, steer_yaw, 0.0)
 	_wheel_rl.rotation = Vector3(_wheel_spin, 0.0, 0.0)
 	_wheel_rr.rotation = Vector3(_wheel_spin, 0.0, 0.0)
+
+func apply_bomb_hit(from_position: Vector3) -> void:
+	signed_speed *= 0.18
+
+	var away := global_position - from_position
+	away.y = 0.0
+
+	if away.length_squared() < 0.001:
+		away = global_transform.basis.z
+
+	away = away.normalized()
+
+	velocity.x += away.x * 12.0
+	velocity.z += away.z * 12.0
+
+	var forward := -global_transform.basis.z
+	rotate_y(signf(forward.cross(away).y) * 0.65)
+
+	_hit_lock = 0.75

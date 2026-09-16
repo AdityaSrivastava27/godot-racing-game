@@ -97,6 +97,7 @@ func _ensure_input_actions() -> void:
 	_ensure_action("brake", [KEY_S, KEY_DOWN])
 	_ensure_action("steer_left", [KEY_A, KEY_LEFT])
 	_ensure_action("steer_right", [KEY_D, KEY_RIGHT])
+	_ensure_action("drop_bomb", [KEY_E])
 	_ensure_joy_axis("steer_left", JOY_AXIS_LEFT_X, -1.0)
 	_ensure_joy_axis("steer_right", JOY_AXIS_LEFT_X, 1.0)
 	_ensure_joy_axis("accelerate", JOY_AXIS_TRIGGER_RIGHT, 1.0)
