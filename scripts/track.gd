@@ -27,10 +27,48 @@ func _clear_generated() -> void:
 
 
 func get_start_transform() -> Transform3D:
-	var point := _oval_point(0.0)
-	var tangent := _oval_tangent(0.0)
+	return get_grid_transform(0)
+
+
+## Grid slot 0 is the player pole; later slots fill two-wide rows behind the line.
+func get_grid_transform(slot: int) -> Transform3D:
+	var row := int(slot / 2)
+	var col := slot % 2
+	var along := -float(row) * 5.8
+	var lateral := (-1.0 if col == 0 else 1.0) * 2.7
+	# Stagger odd rows slightly so cars aren't wheel-to-wheel.
+	if row % 2 == 1:
+		lateral *= -1.0
+	var t := along / average_radius()
+	return get_track_transform(t, lateral)
+
+
+func get_track_transform(t: float, lateral: float = 0.0) -> Transform3D:
+	var point := get_track_point(t, lateral)
 	point.y = 0.06
+	var tangent := get_tangent(t)
 	return Transform3D(Basis.looking_at(tangent, Vector3.UP), point)
+
+
+func get_track_point(t: float, lateral: float = 0.0) -> Vector3:
+	return _oval_point(t) + _oval_normal(t) * lateral
+
+
+func get_tangent(t: float) -> Vector3:
+	return _oval_tangent(t)
+
+
+func get_normal(t: float) -> Vector3:
+	return _oval_normal(t)
+
+
+func average_radius() -> float:
+	return (radius_x + radius_z) * 0.5
+
+
+## Oval parameter in [0, TAU) for a world position (ellipse polar angle).
+func estimate_progress(world_pos: Vector3) -> float:
+	return fposmod(atan2(world_pos.z / radius_z, world_pos.x / radius_x), TAU)
 
 
 func _build() -> void:

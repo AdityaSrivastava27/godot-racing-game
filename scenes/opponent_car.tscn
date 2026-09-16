@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3]
 
-[ext_resource type="Script" path="res://scripts/player_car.gd" id="1_car"]
+[ext_resource type="Script" path="res://scripts/ai_car.gd" id="1_car"]
 [ext_resource type="Material" path="res://materials/car_body.tres" id="2_body"]
 [ext_resource type="Material" path="res://materials/car_cabin.tres" id="3_cabin"]
 [ext_resource type="Material" path="res://materials/car_plastic.tres" id="4_plastic"]
@@ -30,7 +30,7 @@ top_radius = 0.32
 bottom_radius = 0.32
 height = 0.26
 
-[node name="PlayerCar" type="CharacterBody3D"]
+[node name="OpponentCar" type="CharacterBody3D"]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_car")
