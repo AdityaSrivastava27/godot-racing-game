@@ -333,12 +333,11 @@ func _ease_apart(push_dir: Vector3, share: float, delta: float) -> void:
 	var yield_factor := share / maxf(impact_stability, 0.05)
 	var separation_speed := _RUB_SEPARATION * yield_factor * 2.0
 
-	var current_speed := Vector3(velocity.x, 0.0, velocity.z).dot(push_dir)
+	var current_speed := Vector3(_knock.x, 0.0, _knock.z).dot(push_dir)
 
 	if current_speed < separation_speed:
 		var push := separation_speed - current_speed
-		velocity.x += push_dir.x * push
-		velocity.z += push_dir.z * push
+		_add_knock(push_dir * push)
 
 
 func _contact_normal(hit: KinematicCollision3D, other: ArcadeCar) -> Vector3:

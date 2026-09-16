@@ -1,17 +1,21 @@
-# Bomb Mechanic Rubric
+```markdown
+# Car Collision Mechanic Rubric
 
-- Pressing E drops a bomb behind the player's car
-- Pressing E during the countdown does nothing
-- Holding or spamming E doesn't drop a stream of bombs
-- The bomb sits on the road, not floating or sunk in
-- A car that drives into the bomb sets it off straight away
-- The bomb goes off at slow speed and at full speed
-- The bomb doesn't go off under the player's car when dropped
-- The bomb goes off only once
-- A hit car slows down, is pushed away from the bomb and briefly loses control
-- The hit car recovers and keeps racing
-- Cars aren't launched into the air or through barriers
-- An untouched bomb disappears after a short time
-- No errors in the log when a bomb goes off
+- Cars never pass through or overlap each other
+- Cars don't stick together or shake when touching
+- A rear hit pushes the front car forward and slows the back car
+- A side hit pushes both cars apart
+- A hit car can slow down, get pushed or briefly lose control
+- Loss of control is short and the car keeps driving
+- Harder hits cause bigger reactions than light taps
+- The car that gets hit reacts more than the car that hits it
+- The player's car stays controllable after hitting an opponent
+- Cars don't flip or fly into the air
+- A car pinned against a barrier can drive free
+- Driving still feels arcade-like when not colliding
+- Bombs still go off when a car drives into them
+- A bomb hit pushes and spins a car exactly as before
 - AI opponents still drive forward and stay in their lanes
-- Player driving is unchanged
+- No traffic cars are added
+- No errors in the log during collisions
+```
