@@ -14,8 +14,8 @@ const OPPONENT_COLORS: Array[Color] = [
 	Color(0.95, 0.45, 0.12),
 	Color(0.15, 0.82, 0.82),
 ]
-const OPPONENT_LANES: Array[float] = [-3.2, 3.0, -1.4, 2.2, -2.6, 1.2]
-const OPPONENT_SPEEDS: Array[float] = [30.0, 31.5, 29.0, 32.5, 30.5, 33.0]
+const OPPONENT_LANES: Array[float] = [-0.8, 0.8, -0.4, 0.4, -0.6, 0.6]
+const OPPONENT_SPEEDS: Array[float] = [33.0, 34.0, 32.5, 34.5, 33.5, 35.0]
 
 @export var countdown_seconds: float = 3.0
 
