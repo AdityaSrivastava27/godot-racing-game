@@ -1,4 +1,3 @@
-```markdown
 # Car Collision Mechanic Rubric
 
 - Cars never pass through or overlap each other
@@ -18,4 +17,3 @@
 - AI opponents still drive forward and stay in their lanes
 - No traffic cars are added
 - No errors in the log during collisions
-```
