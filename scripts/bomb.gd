@@ -43,11 +43,14 @@ func _physics_process(delta: float) -> void:
 func _update_dropper_clear() -> void:
 	if _dropper_clear:
 		return
+
 	if _dropper == null or not is_instance_valid(_dropper):
 		_dropper_clear = true
 		return
+
 	var offset := _dropper.global_position - global_position
 	offset.y = 0.0
+
 	if offset.length() > dropper_safe_radius:
 		_dropper_clear = true
 
@@ -71,18 +74,26 @@ func _on_body_exited(body: Node3D) -> void:
 func _detonate(trigger: ArcadeCar) -> void:
 	if _spent:
 		return
+
 	_spent = true
-	monitoring = false
 
 	var hit: Array[ArcadeCar] = []
+
 	if trigger != null:
 		hit.append(trigger)
+
+	# Collect overlapping cars while monitoring is still enabled.
 	for body in get_overlapping_bodies():
 		var car := body as ArcadeCar
+
 		if car != null and not hit.has(car):
 			if car == _dropper and not _dropper_clear:
 				continue
+
 			hit.append(car)
+
+	# Disable monitoring only after collecting the overlapping bodies.
+	monitoring = false
 
 	for car in hit:
 		car.apply_bomb_hit(global_position)
