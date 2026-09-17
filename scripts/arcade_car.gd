@@ -26,6 +26,7 @@ var controls_enabled: bool = false
 var signed_speed: float = 0.0
 var _wheel_spin: float = 0.0
 var _hit_lock: float = 0.0
+var _collision_lock: float = 0.0
 var _knock: Vector3 = Vector3.ZERO
 var _spin: float = 0.0
 var _jolt: float = 0.0
@@ -69,7 +70,10 @@ func _physics_process(delta: float) -> void:
 		axes = _get_drive_axes()
 	if _hit_lock > 0.0:
 		_hit_lock = maxf(_hit_lock - delta, 0.0)
-		# Steering goes vague and the power cannot come straight back on.
+		axes *= 0.12
+
+	if _collision_lock > 0.0:
+		_collision_lock = maxf(_collision_lock - delta, 0.0)
 		axes.x *= 0.35
 		axes.y = minf(axes.y, 0.25)
 
@@ -163,7 +167,7 @@ func _apply_arcade_velocity(delta: float) -> void:
 
 	var desired := _planar_forward() * signed_speed
 	var planar := Vector3(velocity.x, 0.0, velocity.z) - Vector3(_knock.x, 0.0, _knock.z)
-	var grip_scale := 0.5 if _hit_lock > 0.0 else 1.0
+	var grip_scale := 0.5 if _collision_lock > 0.0 else 1.0
 	var blend := clampf(grip * grip_scale * delta, 0.0, 1.0)
 	planar = planar.lerp(desired, blend)
 	var decay := knock_decay * (0.6 if _hit_lock > 0.0 else 1.0)
@@ -321,7 +325,7 @@ func _receive_impact(
 		var scramble := minf(0.1 + take * closing * 0.07, 0.85)
 		if got_rear_ended:
 			scramble *= 0.55
-		_hit_lock = maxf(_hit_lock, scramble)
+		_collision_lock = maxf(_collision_lock, scramble)
 
 	# Body roll is cosmetic, so it reads on every impact regardless of how stable the car is.
 	_jolt = clampf(_jolt - push_dir.dot(global_transform.basis.x) * closing * 0.04 * share, -0.45, 0.45)
